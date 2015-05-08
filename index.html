@@ -138,6 +138,16 @@ $build['#cache']['tags'][] = 'taxonomy_term:23';
 						<p class="fragment"><small>~ HTTP's <code>Cache-Control: max-age</code> header</small></p>
 					</section>
 					<section>
+						<p>To make it easier:</p>
+						<p><small><code class="php">Renderer::addCacheableDependency($dependency)</code></small></p>
+						<pre class="fragment"><code class="php">$site_config = $this->config->get('system.site');
+
+$build = [
+  '#markup' => t('Welcome to @site!', $site_config->get('name')),
+];
+$this->renderer->addCacheableDependency($site_config)</code></pre>
+					</section>
+					<section>
 						<h3>If Drupal pages were ships…</h3>
 						<p>(Drupal rendering a page ~ building a ship)</p>
 					</section>
@@ -159,7 +169,45 @@ $build['#cache']['tags'][] = 'taxonomy_term:23';
 				
 				<!-- Fabian + Wim -->
 				<section>
-					<h2>Scenarios + pitfalls</h2>
+					<section>
+						<h2>Scenarios + pitfalls</h2>
+					</section>
+					<section>
+						<h3>Depending on configuration?</h3>
+						<p>Don't forget to add its cache tags!</p>
+						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($config)</code></pre></p>
+					</section>
+					<section>
+						<h3>Depending on an entity?</h3>
+						<p>Don't forget to add its cache tags!</p>
+						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($entity)</code></pre></p>
+					</section>
+					<section>
+						<h3>Depending on a field of an entity?</h3>
+						<p>Don't forget to add the entity's cache tags!</p>
+						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($entity)</code></pre></p>
+					</section>
+					<section>
+						<h3>Uncacheable data?</h3>
+						<p>Don't forget to set max-age to zero!</p>
+						<p><pre style="width: 50%"><code class="php">$build['#cache']['max-age'] = 0;</code></pre></p>
+					</section>
+					<section>
+						<h3>Manually rendering a link?</h3>
+						<p>Either:</p>
+						<ul>
+							<li>Use Twig:
+								<pre><code class="twig" style="width: 110%">{{ link(something.title, something.url) }}</code></pre>
+							</li>
+							<li>Use <code>#type => link</code>:
+								<pre><code class="php" style="width: 110%">$build['link'] = [
+  '#type' => 'link',
+  '#title' => 'Drupal',
+  '#url' => Url::fromUri('https://drupal.org'),
+];</code></pre>
+							</li>
+						</ul>
+					</section>
 				</section>
 
 				<!-- Fabian + Wim -->
