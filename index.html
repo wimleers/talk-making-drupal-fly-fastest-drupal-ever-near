@@ -58,8 +58,103 @@
 				
 				<!-- Wim -->
 				<section>
-					<h2>The thought process</h2>
-					<h3>The theory of how we make Drupal fast</h3>
+					<section>
+						<h2>The thought process</h2>
+						<p>The theory of how we make Drupal fast</p>
+					</section>
+					<section>
+						<h3>Dependencies, dependencies, dependencies!</h3>
+						<ul class="fragment">
+							<li>Drupal 7 didn't track <em>any</em> dependencies
+							<li class="fragment">e.g. <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/url/7"><code>url()</code></a>'s output depended on:
+								<ul style="font-size: 70%">
+									<li class="fragment"><code>&lt;front&gt;</code> configuration
+									<li class="fragment">HTTPS configuration
+									<li class="fragment">clean URL configuration
+									<li class="fragment">current site in multisite
+									<li class="fragment">current host name
+									<li class="fragment">path processing
+										<ul>
+											<li class="fragment">negotiated interface language
+											<li class="fragment">negotiated URL language
+											<li class="fragment">…</li>
+										</ul>
+									</li>
+								</ul>
+							</li>
+							<li class="fragment">⇒ impossible to <del>cache</del> <ins>invalidate</ins></li>
+							<li class="fragment"><em> … yet many of us did it anyway!</em></li>
+						</ul>
+					</section>
+					<section>
+						<h3>Correct invalidation in Drupal 8</h3>
+						<ul>
+							<li>Cache tags <small class="fragment">(data dependencies)</small>
+							<li>Cache contexts <small class="fragment">(context dependencies)</small>
+							<li>Cache max-age <small class="fragment">(time dependencies)</small>
+						</ul>
+						<div class="fragment">
+							<p>+</p>
+							<p>Cacheability bubbled during rendering!</p>
+						</div>
+					</section>
+					<section>
+						<h3>In practice</h3>
+						<p>Try to make this thought process a habit:</p>
+					</section>
+					<section>
+						<h3>1.</h3>
+						<blockquote>I'm rendering something. That means I must think of cacheability!</blockquote>
+					</section>
+					<section>
+						<h3>2.</h3>
+						<blockquote>Is this something that's expensive to render, and therefore is worth caching?</blockquote>
+						<p>↪︎ If "yes": <strong>cache keys</strong></p>
+						<pre class="fragment" style="margin-top: 3em; width: 70%"><code class="php">$build['#cache']['keys'] = ['node', 5, 'teaser'];</code></pre>
+					</section>
+					<section>
+						<h3>3.</h3>
+						<blockquote>Does the representation of the thing I'm rendering vary per combination of permissions, per URL, per interface language, per … something?</blockquote>
+						<p>↪︎ If "yes": <strong>cache contexts</strong></p>
+						<pre class="fragment" style="margin-top: 3em; width: 70%"><code class="php">$build['#cache']['contexts'][] = 'user.permissions';
+$build['#cache']['contexts'][] = 'url';
+</code></pre>
+						<p class="fragment"><small>~ HTTP's <code>Vary</code> header</small></p>
+					</section>
+					<section>
+						<h3>4.</h3>
+						<blockquote>What causes the representation of the thing I'm rendering become outdated?</blockquote>
+						<p>↪︎ If "yes": <strong>cache tags</strong></p>
+						<pre class="fragment" style="margin-top: 3em; width: 70%"><code class="php">$build['#cache']['tags'][] = 'node:5';
+$build['#cache']['tags'][] = 'user:3';
+$build['#cache']['tags'][] = 'taxonomy_term:23';
+</code></pre>
+					</section>
+					<section>
+						<h3>5.</h3>
+						<blockquote>When does the representation of the thing I'm rendering become outdated?</blockquote>
+						↪︎ If "yes": <strong>cache max-age</strong>
+						<pre class="fragment" style="margin-top: 3em; width: 70%"><code class="php">$build['#cache']['max-age'] = Cache::PERMANENT;</code></pre>
+						<p class="fragment"><small>~ HTTP's <code>Cache-Control: max-age</code> header</small></p>
+					</section>
+					<section>
+						<h3>If Drupal pages were ships…</h3>
+						<p>(Drupal rendering a page ~ building a ship)</p>
+					</section>
+					<section>
+						<h3>… then this could be Drupal 8…</h3>
+						<figure>
+							<img src="img/lego-ship-drupal8.jpg">
+							<figcaption>Assembled from components. Clear dependencies.</figcaption>
+						</figure>
+					</section>
+					<section>
+						<h3>… and this would be Drupal 7</h3>
+						<figure>
+							<img src="img/lego-ship-drupal7.jpg">
+							<figcaption>Assembled from seemingly random pieces. <em>But it is a boat!</em></figcaption>
+						</figure>
+					</section>
 				</section>
 				
 				<!-- Fabian + Wim -->
