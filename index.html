@@ -15,6 +15,7 @@
 
 		<link rel="stylesheet" href="src/reveal/css/reveal.css">
 		<link rel="stylesheet" href="src/reveal/css/theme/black.css" id="theme">
+		<link rel="stylesheet" href="custom.css">
 
 		<!-- Code syntax highlighting -->
 		<link rel="stylesheet" href="src/reveal/lib/css/zenburn.css">
@@ -53,7 +54,223 @@
 
 				<!-- Fabian -->
 				<section>
-					<h2>Demo + Intro</h2>
+					<section>
+						<h2>The fastest ever Drupal?</h2>
+					</section>
+					<section>
+						<h2>Are you serious?</h2>
+					</section>
+					<section>
+						<h2>You are kidding right?</h2>
+					</section>
+					<section>
+						<h2>But I thought Drupal 8 was slow!!!11111</h2>
+					</section>
+					<section>
+						<h2>Everyone told me that!</h2>
+					</section>
+					<section>
+						<h2>So it must be TRUE!</h2>
+					</section>
+					<section>
+						<h2>And besides that, page cache was already in Drupal 7!</h2>
+					</section>
+					<section>
+						<h2>Page Cache really does not count!</h2>
+						<ul class="fragment">
+							<li>( Except it does, as Wim will show you later. )</li>
+						</ul>
+					</section>
+					<section>
+						<h2>So lets take a look ...</h2>
+					</section>
+					<section>
+						<h2>... at a short demo ...</h2>
+					</section>
+					<section>
+						<h2>... to show you ...</h2>
+					</section>
+					<section>
+						<h2>Demo Video</h2>
+					</section>
+					<section>
+						<h2>What you just saw ...</h2>
+					</section>
+					<section>
+						<h2>... is part of the mission ...</h2>
+					</section>
+					<section>
+						<h2>... to make the whole web fast.</h2>
+					</section>
+					<section>
+						<h3>Make the whole web fast</h3>
+						<ul>
+							<li>A challenge by Wim Leers.</li>
+							<li class="fragment">http://calendar.perfplanet.com/2013/making-the-entire-web-fast/</li>
+							<li class="fragment">Everyone profits from this!</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Ambitious goal, so lets see what "fast" means:</h3>
+						<ul class="fragment">
+							<li>Great User Experience, pages load fast for 1 user</li>
+							<li class="fragment">Great User Experience, pages load fast for [n] concurrent users</li>
+							<li class="fragment">Time-to-First-Byte + Asset loading + Rendering + JS exec time == minimal</li>
+						</ul>
+					</section>
+					<section>
+						<h3>How do you achieve that?</h3>
+						<ul class="fragment">
+							<li class="fragment">SIMPLE!</li>
+							<li class="fragment green">Use static HTML pages</li>
+							<li class="fragment green">Use no CSS</li>
+							<li class="fragment green">Use no Javascript</li>
+							<li class="fragment green">Use no images</li>
+							<li class="fragment green">Just text and links!</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Seriously?</h2>
+					</section>
+					<section>
+						<h2>No, of course not!</h2>
+					</section>
+					<section>
+						<h2>There is some truth to that, though!</h2>
+					</section>
+					<section>
+						<h3>Performance Optimization means:</h3>
+						<p>Optimize to do:</p>
+						<ul>
+							<li class="fragment">As less work as possible!</li>
+							<li class="fragment">As less resources as possible!</li>
+						</ul>
+					</section>
+					<section>
+						<h3>So for the "critical path" the process is:</h3>
+						<h4>Can we:</h4>
+						<ul>
+							<li class="fragment">... avoid doing the work at all?</li>
+							<li class="fragment">... avoid doing the work during the critical path?</li>
+							<li class="fragment">... cache it permanently?</li>
+							<li class="fragment">... cache it temporarily?</li>
+							<li class="fragment">... defer executing it after the main content? (Big Pipe)</li>
+						</ul>
+					</section>
+					<section>
+						<h2>So, remember ACD:<br /><br />Avoid, Cache, Defer</h2>
+					</section>
+					<section>
+						<h3>Caching has problems</h3>
+						<h4>Content should:</h4>
+						<ul>
+							<li class="fragment">... be as current as possible.</li>
+							<li class="fragment">... have a high cache hit ratio.</li>
+							<li class="fragment">... have low cache invalidation complexity.</li>
+						</ul>
+						<h4 class="fragment red">Choose 2!</h4>
+						<h4 class="fragment red">You can't have all three!</h4>
+					</section>
+					<section>
+						<h3>Examples for low complexity cache invalidation:</h3>
+						<h4>Time Based Invalidation</h4>
+						<ul>
+							<li class="fragment">Cache pages unconditionally for a year, content is not really current, but cache hit ratio is great.</li>
+							<li class="fragment">Cache pages never, content is always current, but cache-hit ratio is 0%.</li>
+							<ul>
+								<li class="red fragment">A <strong>lot</strong> of Drupal 7 sites operate that way right now :(</li>
+							</ul>
+							<li class="fragment">Cache pages for e.g. 6 hours, content is quite current and cache hit ratio is acceptable.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Examples for low complexity cache invalidation:</h3>
+						<h4>Clear All Invalidation</h4>
+						<ul>
+							<li class="fragment">Whenever a page changes, clear the whole page cache.</li>
+							<li class="red fragment">=&gt; Drupal 7's page cache operates like this by default.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Examples for high complexity cache invalidation (contrib):</h3>
+						<h4>Clear only what has changed</h4>
+						<ul>
+							<li class="fragment">e.g. expire / varnish module in D7.</li>
+							<li class="fragment">Needs to purge / expire all urls that contain content from anything and needs to track that.</li>
+							<li class="red fragment">=&gt; High invalidation cost</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Drupal 8 chose high-complexity</h3>
+						<ul>
+							<li class="green fragment">Content invalidated directly</li>
+							<li class="green fragment">Cached permanently</li>
+							<li class="fragment">Solution: Cache Tags (explained later)</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Caching has <strong class="red">more</strong> problems</h3>
+						<h4>Content should:</h4>
+						<ul>
+							<li class="fragment">... be targeted to a user / group / special permission / phase of the moon (granularity).</li>
+							<li class="fragment">... have a high cache hit ratio.</li>
+							<li class="fragment">... have low complexity (logic needed to ensure caches are granularly targeted).</li>
+						</ul>
+						<h4 class="fragment red">Choose 2!</h4>
+						<h4 class="fragment red">You can't have all three!</h4>
+						<h4 class="fragment">( What again? )</h4>
+					</section>
+					<section>
+						<h3>Drupal 8 chose high-complexity</h3>
+						<ul>
+							<li class="green fragment">Everything declares what it variates on.</li>
+							<li class="green fragment">This allows caching authenticated user content securely.</li>
+							<li class="fragment">Solution: Cache Contexts (explained later) + Placeholders</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Wait a moment!</h2>
+					</section>
+					<section>
+						<h2>What about KISS?</h2>
+						<h3>(Keep It Simple, Stupid!)</h3>
+					</section>
+					<section>
+						<h2>Counter Question:</h2>
+					</section>
+					<section>
+						<h2>Who of you uses a database?</h2>
+					</section>
+					<section>
+						<h2>Databases are actually "beasts of complexity"</h2>
+						<h3 class="fragment">... but you don't see any of that!</h3>
+						<h3 class="fragment">... you just give hints and the database does its magic.</h3>
+					</section>
+					<section>
+						<h3>Drupal 8 makes it as simple as possible for you!</h3>
+						<ul>
+							<li class="fragment">Huge chance!</li>
+							<li class="fragment">Drupal 8 does all the caching logic internally.</li>
+							<li class="fragment">If you give Drupal information, then it can be smarter about its decisions.</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Drupal 8 formalizes those things in a "language" to make <strong>your</strong> site fast.</h2>
+					</section>
+					<section>
+						<h2>Drupal 7 can use the same "language" - once it is finalized in Drupal 8.</h2>
+						<ul>
+						  <li>render_cache 7.x-2.x module
+                                                  <li>service_container - using the same code base as Drupal 8</li>
+                                                  <li class="fragment">[ developed in parallel, but 7.x frozen atm. ]</li>
+						</ul>
+					</section>
+					<section>
+						<h2>But how do I give this information?</h2>
+					</section>
+					<section>
+						<h2>Wim will show you now!</h2>
+					</section>
 				</section>
 				
 				<!-- Wim -->
