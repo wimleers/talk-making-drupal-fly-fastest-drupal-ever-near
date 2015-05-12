@@ -201,6 +201,14 @@
 						</ul>
 					</section>
 					<section>
+						<h3>Drupal 8 chose high-complexity</h3>
+						<ul>
+							<li class="green fragment">Content invalidated directly</li>
+							<li class="green fragment">Cached permanently</li>
+							<li class="fragment">Solution: Cache Tags (explained later)</li>
+						</ul>
+					</section>
+					<section>
 						<h3>Caching has <strong class="red">more</strong> problems</h3>
 						<h4>Content should:</h4>
 						<ul>
@@ -211,6 +219,57 @@
 						<h4 class="fragment red">Choose 2!</h4>
 						<h4 class="fragment red">You can't have all three!</h4>
 						<h4 class="fragment">( What again? )</h4>
+					</section>
+					<section>
+						<h3>Drupal 8 chose high-complexity</h3>
+						<ul>
+							<li class="green fragment">Everything declares what it variates on.</li>
+							<li class="green fragment">This allows caching authenticated user content securely.</li>
+							<li class="fragment">Solution: Cache Contexts (explained later) + Placeholders</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Wait a moment!</h2>
+					</section>
+					<section>
+						<h2>What about KISS?</h2>
+						<h3>(Keep It Simple, Stupid!)</h3>
+					</section>
+					<section>
+						<h2>Counter Question:</h2>
+					</section>
+					<section>
+						<h2>Who of you uses a database?</h2>
+					</section>
+					<section>
+						<h2>Databases are actually "beasts of complexity"</h2>
+						<h3 class="fragment">... but you don't see any of that!</h3>
+						<h3 class="fragment">... you just give hints and the database does its magic.</h3>
+					</section>
+					<section>
+						<h3>Drupal 8 makes it as simple as possible for you!</h3>
+						<ul>
+							<li class="fragment">Huge chance!</li>
+							<li class="fragment">Drupal 8 does all the caching logic internally.</li>
+							<li class="fragment">If you give Drupal information, then it can be smarter about its decisions.</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Drupal 8 formalizes those things in a "language" to make <strong>your</strong> site fast.</h2>
+					</section>
+					<section>
+						<h2>Drupal 7 can use the same "language" - once it is finalized in Drupal 8.</h2>
+						<ul>
+						  <li>render_cache 7.x-2.x module
+                                                  <li>service_container - using the same code base as Drupal 8</li>
+                                                  <li class="fragment">[ developed in parallel, but 7.x frozen atm. ]</li>
+						</ul>
+					</section>
+					<section>
+						<h2>But how do I give this information?</h2>
+					</section>
+					<section>
+						<h2>Wim will show you now!</h2>
 					</section>
 				</section>
 				
