@@ -276,18 +276,18 @@
 				<!-- Wim -->
 				<section>
 					<section>
+						<h2>The thought process</h2>
+						<p>The theory of how we make Drupal fast</p>
+					</section>
+					<section>
 						<h3>Dependencies, dependencies, dependencies!</h3>
 						<ul class="fragment">
 							<li>Drupal 7 didn't track <em>any</em> dependencies
 							<li class="fragment">e.g. <code>drupal_add_css()</code>, <code>drupal_add_js()</code> …
 							</li>
 							<li class="fragment red">⇒ impossible to cache</li>
-							<li class="fragment green">⇒ asset libraries solve that</li>
+							<li class="fragment green">⇒ <code>#attached</code> asset libraries solve that</li>
 						</ul>
-					</section>
-					<section>
-						<h2>The thought process</h2>
-						<p>The theory of how we make Drupal fast</p>
 					</section>
 					<section>
 						<h3>Dependencies, dependencies, dependencies!</h3>
@@ -406,17 +406,17 @@ $this->renderer->addCacheableDependency($site_config)</code></pre>
 					<section>
 						<h3>Depending on configuration?</h3>
 						<p>Don't forget to add its cache tags!</p>
-						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($config)</code></pre></p>
+						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($build, $config)</code></pre></p>
 					</section>
 					<section>
 						<h3>Depending on an entity?</h3>
 						<p>Don't forget to add its cache tags!</p>
-						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($entity)</code></pre></p>
+						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($build, $entity)</code></pre></p>
 					</section>
 					<section>
 						<h3>Depending on a field of an entity?</h3>
 						<p>Don't forget to add the entity's cache tags!</p>
-						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($entity)</code></pre></p>
+						<p><pre style="width: 70%"><code class="php">Renderer::addCacheableDependency($build, $entity)</code></pre></p>
 					</section>
 					<section>
 						<h3>Uncacheable data?</h3>
