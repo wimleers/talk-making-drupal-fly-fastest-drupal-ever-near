@@ -82,7 +82,7 @@
 						</ul>
 					</section>
 					<section>
-						<h2>So lets take a look ...</h2>
+						<h2>So let's take a look ...</h2>
 					</section>
 					<section>
 						<h2>... at a short demo ...</h2>
@@ -142,8 +142,8 @@
 						<h3>Performance Optimization means:</h3>
 						<p>Optimize to do:</p>
 						<ul>
-							<li class="fragment">As less work as possible!</li>
-							<li class="fragment">As less resources as possible!</li>
+							<li class="fragment">As little work as possible!</li>
+							<li class="fragment">As little resources as possible!</li>
 						</ul>
 					</section>
 					<section>
@@ -173,7 +173,7 @@
 					</section>
 					<section>
 						<h3>Examples for low complexity cache invalidation:</h3>
-						<h4>Time Based Invalidation</h4>
+						<h4>Time-Based Invalidation</h4>
 						<ul>
 							<li class="fragment">Cache pages unconditionally for a year, content is not really current, but cache hit ratio is great.</li>
 							<li class="fragment">Cache pages never, content is always current, but cache-hit ratio is 0%.</li>
@@ -188,22 +188,22 @@
 						<h4>Clear All Invalidation</h4>
 						<ul>
 							<li class="fragment">Whenever a page changes, clear the whole page cache.</li>
-							<li class="red fragment">=&gt; Drupal 7's page cache operates like this by default.</li>
+							<li class="red fragment">⇒ Drupal 7's page cache operates like this by default.</li>
 						</ul>
 					</section>
 					<section>
-						<h3>Examples for high complexity cache invalidation (contrib):</h3>
+						<h3>Examples for high complexity cache invalidation (D7 contrib):</h3>
 						<h4>Clear only what has changed</h4>
 						<ul>
-							<li class="fragment">e.g. expire / varnish module in D7.</li>
-							<li class="fragment">Needs to purge / expire all urls that contain content from anything and needs to track that.</li>
-							<li class="red fragment">=&gt; High invalidation cost</li>
+							<li class="fragment">e.g. <code>expire</code> / <code>varnish</code> module in D7.</li>
+							<li class="fragment">Needs to purge / expire all URLs that contain content from anything and needs to track that.</li>
+							<li class="red fragment">⇒ High invalidation cost</li>
 						</ul>
 					</section>
 					<section>
 						<h3>Drupal 8 chose high-complexity</h3>
 						<ul>
-							<li class="green fragment">Content invalidated directly</li>
+							<li class="green fragment">Content invalidated instantaneously</li>
 							<li class="green fragment">Cached permanently</li>
 							<li class="fragment">Solution: Cache Tags (explained later)</li>
 						</ul>
@@ -212,9 +212,9 @@
 						<h3>Caching has <strong class="red">more</strong> problems</h3>
 						<h4>Content should:</h4>
 						<ul>
-							<li class="fragment">... be targeted to a user / group / special permission / phase of the moon (granularity).</li>
+							<li class="fragment">... be varied by a user / group / special permission / phase of the moon (granularity).</li>
 							<li class="fragment">... have a high cache hit ratio.</li>
-							<li class="fragment">... have low complexity (logic needed to ensure caches are granularly targeted).</li>
+							<li class="fragment">... have low complexity (logic needed to ensure caches are granularly varied).</li>
 						</ul>
 						<h4 class="fragment red">Choose 2!</h4>
 						<h4 class="fragment red">You can't have all three!</h4>
@@ -223,7 +223,7 @@
 					<section>
 						<h3>Drupal 8 chose high-complexity</h3>
 						<ul>
-							<li class="green fragment">Everything declares what it variates on.</li>
+							<li class="green fragment">Everything declares what it varies by.</li>
 							<li class="green fragment">This allows caching authenticated user content securely.</li>
 							<li class="fragment">Solution: Cache Contexts (explained later) + Placeholders</li>
 						</ul>
@@ -249,7 +249,7 @@
 					<section>
 						<h3>Drupal 8 makes it as simple as possible for you!</h3>
 						<ul>
-							<li class="fragment">Huge chance!</li>
+							<li class="fragment">Huge opportunity!</li>
 							<li class="fragment">Drupal 8 does all the caching logic internally.</li>
 							<li class="fragment">If you give Drupal information, then it can be smarter about its decisions.</li>
 						</ul>
@@ -258,10 +258,10 @@
 						<h2>Drupal 8 formalizes those things in a "language" to make <strong>your</strong> site fast.</h2>
 					</section>
 					<section>
-						<h2>Drupal 7 can use the same "language" - once it is finalized in Drupal 8.</h2>
+						<h2>Drupal 7 can use the same "language" — once it is finalized in Drupal 8.</h2>
 						<ul>
 						  <li>render_cache 7.x-2.x module
-                                                  <li>service_container - using the same code base as Drupal 8</li>
+                                                  <li>service_container — using the same code base as Drupal 8</li>
                                                   <li class="fragment">[ developed in parallel, but 7.x frozen atm. ]</li>
 						</ul>
 					</section>
@@ -365,6 +365,9 @@ $build = [
 $this->renderer->addCacheableDependency($site_config)</code></pre>
 					</section>
 					<section>
+						<img src="img/ideal-case.jpg" />
+					</section>
+					<section>
 						<h3>If Drupal pages were ships…</h3>
 						<p>(Drupal rendering a page ~ building a ship)</p>
 					</section>
@@ -432,7 +435,9 @@ $this->renderer->addCacheableDependency($site_config)</code></pre>
 
 				<!-- Fabian + Wim -->
 				<section>
-					<h2>Q&amp;A</h2>
+					<h3>Hope you liked it!</h3>
+					<h2>Questions?</h2>
+					<p style="font-size: 95%"><a href="http://wimleers.com/talk/making-drupal-fly-fastest-drupal-ever-near">wimleers.com/talk/making-drupal-fly-fastest-drupal-ever-near</a></p>
 				</section>
 
 			</div>
