@@ -276,12 +276,22 @@
 				<!-- Wim -->
 				<section>
 					<section>
+						<h3>Dependencies, dependencies, dependencies!</h3>
+						<ul class="fragment">
+							<li>Drupal 7 didn't track <em>any</em> dependencies
+							<li class="fragment">e.g. <code>drupal_add_css()</code>, <code>drupal_add_js()</code> …
+							</li>
+							<li class="fragment red">⇒ impossible to cache</li>
+							<li class="fragment green">⇒ asset libraries solve that</li>
+						</ul>
+					</section>
+					<section>
 						<h2>The thought process</h2>
 						<p>The theory of how we make Drupal fast</p>
 					</section>
 					<section>
 						<h3>Dependencies, dependencies, dependencies!</h3>
-						<ul class="fragment">
+						<ul>
 							<li>Drupal 7 didn't track <em>any</em> dependencies
 							<li class="fragment">e.g. <a href="https://api.drupal.org/api/drupal/includes%21common.inc/function/url/7"><code>url()</code></a>'s output depended on:
 								<ul style="font-size: 70%">
@@ -430,6 +440,28 @@ $this->renderer->addCacheableDependency($site_config)</code></pre>
 						</ul>
 					</section>
 					<!-- Fabian -->
+					<section>
+						<h3>Scenario: vary by cookie</h3>
+						<pre><code>$args = ['%username' => $_COOKIE['username']];
+$build['#markup'] = $this->t('Hi, %username', $args);
+
+$build['#cache']['contexts'][] = 'cookies:username';</code></pre>
+					</section>
+					<section>
+						<h3>Scenario: <em>always</em> vary by a 'device' cookie</h3>
+						<p>In <code>sites/yoursite.com/services.yml</code>:
+						<pre><code>parameters:
+  renderer.config:
+    required_cache_contexts:
+      # The two default required cache contexts.
+      - 'languages:language_interface'
+      - 'theme'
+
+      # The one we added!
+      - 'cookies:device'
+</code></pre>
+					</section>
+
 					<!-- more to follow -->
 				</section>
 
@@ -438,6 +470,9 @@ $this->renderer->addCacheableDependency($site_config)</code></pre>
 					<h3>Hope you liked it!</h3>
 					<h2>Questions?</h2>
 					<p style="font-size: 95%"><a href="http://wimleers.com/talk/making-drupal-fly-fastest-drupal-ever-near">wimleers.com/talk/making-drupal-fly-fastest-drupal-ever-near</a></p>
+					<br>
+					<p><a href="https://www.drupal.org/developing/api/8/cache/contexts">d.o/developing/api/8/cache/contexts</p>
+					<p><a href="https://www.drupal.org/developing/api/8/render/arrays/cacheability">d.o/developing/api/8/render/arrays/cacheability</p>
 				</section>
 
 			</div>
