@@ -632,7 +632,30 @@ $this->renderer->addCacheableDependency($build, $site_config)</code></pre>
 				<!-- Fabian -->
 				<section>
 					<section>
-						<h2><code>Placeholder render strategies</code></h2>
+						<h2>Placeholder render strategies</h2>
+					</section>
+					<section>
+						<pre><code>placeholder_strategy:
+  class: Drupal\Core\Render\Placeholder\ChainedPlaceholderStrategy
+  tags:
+    - { name: service_collector, tag: placeholder_strategy, call: addPlaceholderStrategy }
+placeholder_strategy.single_flush:
+  class: Drupal\Core\Render\Placeholder\SingleFlushStrategy
+  tags:
+    - { name: placeholder_strategy, priority: -1000 }
+</code></pre>
+					</section>
+					<section>
+						<pre><code class="php">
+class SingleFlushStrategy implements PlaceholderStrategyInterface {
+
+  public function processPlaceholders(array $placeholders) {
+    // Return all placeholders as is; they should be rendered directly.
+    return $placeholders;
+  }
+
+}
+</code></pre>
 					</section>
 				</section
 
