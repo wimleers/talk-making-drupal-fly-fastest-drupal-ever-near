@@ -42,7 +42,7 @@
 			<div class="slides">
 				<section>
 					<h1>Making Drupal fly</h1>
-					<h3>The fastest Drupal ever is near!</h3>
+					<h3>The fastest Drupal ever is here!</h3>
 					<p><em>🌴 Barcelona edition 🌴</em></p>
 					<br>
 					<p>
@@ -62,27 +62,6 @@
 							There is almost nothing in my installation. Very few users, very little content.</p>
 						</blockquote>
 						<p class="fragment"><a href="https://www.drupal.org/node/63722">d.o/node/63722</a> — complaining about <strong>Drupal 4.7</strong>!</p>
-					</section>
-					<section>
-						<h2>Keep calm and cache!</h2>
-					</section>
-					<section>
-						<h3>Page cache</h3>
-						<h4>… in Drupal 4.7</h4>
-						<pre><code class="php">function cache_get() {
-  global $user, $REQUEST_URI, $REQUEST_METHOD;
-
-  if (!$user->id && $REQUEST_METHOD == "GET") {
-    if ($cache = db_fetch_object(db_query("SELECT * FROM cache WHERE url = '". check_input($REQUEST_URI) ."'"))) {
-      cache_clear(variable_get("cache_clear", 30));
-    }
-    else {
-      ob_start();
-    }
-  }
-
-  return $cache->data ? $cache->data : 0;
-}</code></pre>
 					</section>
 					<section>
 						<h3>Drupal 5</h3>
@@ -106,12 +85,43 @@
 						<p>Poor Drupal…</p>
 						<img src="img/Im_A_Snail.jpg">
 					</section>
+					<section>
+						<h2>Drupal 8</h2>
+						<blockquote><p class="curly">???</p></blockquote>
+					</section>
+					<section>
+						<h2>Keep calm and cache!</h2>
+					</section>
+					<section>
+						<h3>Page cache</h3>
+						<h4>… in Drupal 3.0.0</h4>
+						<pre><code class="php">function cache_get() {
+  global $user, $REQUEST_URI, $REQUEST_METHOD;
+
+  if (!$user->id && $REQUEST_METHOD == "GET") {
+    if ($cache = db_fetch_object(db_query("SELECT * FROM cache WHERE url = '". check_input($REQUEST_URI) ."'"))) {
+      cache_clear(variable_get("cache_clear", 30));
+    }
+    else {
+      ob_start();
+    }
+  }
+
+  return $cache->data ? $cache->data : 0;
+}</code></pre>
+					</section>
 				</section>
 
 				<!-- Fabian -->
 				<section>
 					<section>
-						<h2>The fastest ever Drupal?</h2>
+						<h2>Drupal 8</h2>
+						<blockquote><p class="curly">Drupal 8 is the fastest Drupal ever.<p></blockquote>
+						<p><a href="">Fabian Franz</a></p>
+						<small>September 2015</small>
+					</section>
+					<section>
+						<h2>The fastest Drupal ever?</h2>
 					</section>
 					<section>
 						<h2>Are you serious?</h2>
@@ -129,7 +139,7 @@
 						<h2>So it must be TRUE!</h2>
 					</section>
 					<section>
-						<h2>And besides that, page cache was already in Drupal 7!</h2>
+						<h2>And besides that, page cache was already in Drupal <del>7</del> 3!</h2>
 					</section>
 					<section>
 						<h2>Page Cache really does not count!</h2>
@@ -141,13 +151,22 @@
 						<h2>So let's take a look ...</h2>
 					</section>
 					<section>
-						<h2>... at a short demo ...</h2>
+						<h2>... at a very short demo ...</h2>
 					</section>
 					<section>
 						<h2>... to show you ...</h2>
 					</section>
 					<section>
-						<h2>Demo</h2>
+						<video src="SingleFlush versus BigPipe.mp4" controls>
+					</section>
+					<section>
+						<h2>Confused?</h2>
+					</section>
+					<section>
+						<h2>Let us take that more slowly.</h2>
+					</section>
+					<section>
+						<video src="PlaceholderStrategies.mov" controls>
 					</section>
 					<section>
 						<h2>What you just saw ...</h2>
