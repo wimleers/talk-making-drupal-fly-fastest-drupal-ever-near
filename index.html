@@ -646,14 +646,32 @@ placeholder_strategy.single_flush:
 </code></pre>
 					</section>
 					<section>
-						<pre><code class="php">
-class SingleFlushStrategy implements PlaceholderStrategyInterface {
+						<pre><code class="php">class SingleFlushStrategy implements PlaceholderStrategyInterface {
 
   public function processPlaceholders(array $placeholders) {
     // Return all placeholders as is; they should be rendered directly.
     return $placeholders;
   }
 
+}
+</code></pre>
+					</section>
+					<section>
+						<pre><code class="php">class BigPipeStrategy implements PlaceholderStrategyInterface {
+  public function processPlaceholders(array $placeholders) {
+    foreach ($placeholders as $placeholder => $placeholder_elements) {
+      $return[$placeholder] = [
+        '#markup' => '<div data-big-pipe-selector="' . Html::getId($placeholder) . '"></div>',
+        '#cache' => [
+          'max-age' => 0,
+        ],
+        '#attached' => [
+          'library' => ['big_pipe/big_pipe'],
+        ],
+      ];
+    }
+    return $return;
+  }
 }
 </code></pre>
 					</section>
