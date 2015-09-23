@@ -548,7 +548,76 @@ $this->renderer->addCacheableDependency($build, $site_config)</code></pre>
 						</ol>
 						<p>⇒ able to render in isolation!</p>
 					</section>
-				</section
+				</section>
+
+				<!-- Wim -->
+				<section>
+					<section>
+						<h2>Auto-placeholdering</h2>
+						<pre><code>  renderer.config:
+    auto_placeholder_conditions:
+      max-age: 0
+      contexts: ['session', 'user']
+      tags: []
+</code></pre>
+						<p>Configurable!</p>
+					</section>
+					<section>
+						<pre><code class="php">$output['comment_form'] = [
+  '#lazy_builder' => ['comment.lazy_builders:renderForm', …]
+];
+</code></pre>
+					<p>⬇︎</p>
+					<pre><code class="php">$output['comment_form'] = [
+  '#lazy_builder' => ['comment.lazy_builders:renderForm', …]
+  '#cache' => [
+    'contexts' => ['user'],
+  ],
+];
+</code></pre>
+					</section>
+					<section>
+						<h3>Auto-placeholdering conditions met</h3>
+					<pre><code class="php">$output['comment_form'] = [
+  '#lazy_builder' => ['comment.lazy_builders:renderForm', …]
+  '#cache' => [
+    'contexts' => ['user'],
+  ],
+];
+</code></pre>
+					<p>⬇︎</p>
+					<pre><code class="php">$output['comment_form'] = [
+  '#lazy_builder' => ['comment.lazy_builders:renderForm', …]
+  '#cache' => [
+    'contexts' => ['user'],
+  ],
+  '#create_placeholder' => TRUE,
+];
+</code></pre>
+					</section>
+					<section>
+						<h3>Placeholder created</h3>
+					<pre><code class="php">$output['comment_form'] = [
+  '#lazy_builder' => ['comment.lazy_builders:renderForm', …]
+  '#cache' => ['contexts' => ['user']],
+  '#create_placeholder' => TRUE,
+];
+</code></pre>
+					<p>⬇︎</p>
+					<pre><code class="php">$output['comment_form'] = [
+  '#markup' => '<drupal-render-placeholder callback="comment.lazy_builders:renderForm" arguments="…"" token="876ade565d79d"></drupal-render-placeholder>',
+  '#attached' => [
+    'placeholders' => [
+      '<drupal-render-placeholder callback="comment.lazy_builders:renderForm" arguments="…"" token="876ade565d79d"></drupal-render-placeholder>' => [
+        '#lazy_builder' => ['comment.lazy_builders:renderForm', …]
+        '#cache' => ['contexts' => ['user']],
+      ],
+    ],
+  ],
+];
+</code></pre>
+					</section>
+				</section>
 
 				<!-- Fabian -->
 				<section>
