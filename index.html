@@ -53,6 +53,61 @@
 					</p>
 				</section>
 
+				<section>
+					<section>
+						<blockquote>
+							<p class="curly" style="text-align: left;">I have installed Drupal. However, it's running very, very slowly. Hitting the front page or clicking on a link such as administer can result in delays of 15-30 seconds. Caching is enabled.
+							<br>
+							<br>
+							There is almost nothing in my installation. Very few users, very little content.</p>
+						</blockquote>
+						<p class="fragment"><a href="https://www.drupal.org/node/63722">d.o/node/63722</a> — complaining about <strong>Drupal 4.7</strong>!</p>
+					</section>
+					<section>
+						<h2>Keep calm and cache!</h2>
+					</section>
+					<section>
+						<h3>Page cache</h3>
+						<h4>… in Drupal 4.7</h4>
+						<pre><code class="php">function cache_get() {
+  global $user, $REQUEST_URI, $REQUEST_METHOD;
+
+  if (!$user->id && $REQUEST_METHOD == "GET") {
+    if ($cache = db_fetch_object(db_query("SELECT * FROM cache WHERE url = '". check_input($REQUEST_URI) ."'"))) {
+      cache_clear(variable_get("cache_clear", 30));
+    }
+    else {
+      ob_start();
+    }
+  }
+
+  return $cache->data ? $cache->data : 0;
+}</code></pre>
+					</section>
+					<section>
+						<h3>Drupal 5</h3>
+						<blockquote><p class="curly">Why is my drupal site so slow?</p></blockquote>
+						<p><a href="https://www.drupal.org/node/191060">https://www.drupal.org/node/191060</a></p>
+						<small>November 2007</small>
+					</section>
+					<section>
+						<h3>Drupal 6</h3>
+						<blockquote><p class="curly">[…] navigating between admin pages is slower than an arthritic snail.</p></blockquote>
+						<p><a href="http://drupal.stackexchange.com/q/59895">http://drupal.stackexchange.com/q/59895</a></p>
+						<small>February 2013</small>
+					</section>
+					<section>
+						<h3>Drupal 7</h3>
+						<blockquote><p class="curly">Drupal 7 is unnaceptably slow</p></blockquote>
+						<p><a href="http://stackoverflow.com/q/7974842/80305">http://stackoverflow.com/q/7974842/80305</a></p>
+						<small>November 2011</small>
+					</section>
+					<section>
+						<p>Poor Drupal…</p>
+						<img src="img/Im_A_Snail.jpg">
+					</section>
+				</section>
+
 				<!-- Fabian -->
 				<section>
 					<section>

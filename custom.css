@@ -5,3 +5,20 @@
 .reveal .red {
   color: red;
 }
+
+blockquote p.curly:before, blockquote p.curly:after {
+	content: '”';
+	font-size: 100px;
+	font-family:Georgia, "Times New Roman", Times, serif;
+	color: lightblue;
+	font-weight:bold;
+	vertical-align:top;
+	line-height:0.8
+}
+
+blockquote p.curly:before {
+	content: '“';
+	position:absolute;
+	left:0;
+	top:-2px;
+}
